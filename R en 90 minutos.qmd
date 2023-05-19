@@ -1,0 +1,181 @@
+---
+title: "R en 90 minutos"
+author: "NIS"
+format: html
+editor: visual
+---
+
+Este es un documento de Quarto, uno de los sistemas de publicación que podemos usar desde **Rstudio PosIt** podés aprender más en [https://quarto.org](#0){.uri} si hacemos clic en el botón "visual"
+
+## Esto es un título
+
+### Esto es un título más chiquito
+
+y esto es un texto regular
+
+si apretamos las teclas alt+cntrl+i podemos introducir un espacio para procesar código en R al que llamamos **chunk**. para ejecutar el código hacemos clic en el [**botón verde**]{style="color:green"}
+
+```{r}
+1 + 1
+```
+
+```{r}
+# si queremos comentar algo adentro del chunck usamos el signo "#" al principio de la oración
+```
+
+## Trabajar con objetos
+
+Podemos crear un objeto (una preparación más para nuestros ingredientes) y lo indicamos haciendo una flecha **\<-** o el signo **=**
+
+```{r}
+mi_primer_objeto <- 5
+```
+
+también hay objetos con otros tipos de datos como por ej. texto
+
+```{r}
+
+palabra <- "esto es un objeto con texto adentro" #usamos comillas porque ningun elemento esta suelto
+```
+
+¿Por qué esto no funciona?
+
+```{r}
+palabra <- esto es un objeto con texto adentro #da error
+```
+
+```{r}
+palabra
+```
+
+R es una calculadora
+
+```{r}
+numero_15 <- numero_5 + 10
+
+numero_15
+
+numero_15/5 #no creo un nuevo objeto, pero ejecuto el anterior dividido 5
+
+
+
+```
+
+Podemos concatenar valores en un vector (el objeto 'edades')
+
+```{r}
+edades <- c(29, 36, 45, 23, 32, 38, 29, 34, 25, 59) #un objeto con la edad de 10 personas
+```
+
+Para conocer el promedio de edad de los 10 casos del objeto edades usamos nuestra primera función: `mean()`, la cual permite estimar promedios y es una operación que viene en rstudio de base
+
+```{r}
+mean(edades)
+```
+
+Para ver las primeras 5 observaciones
+
+```{r}
+head(edades)
+```
+
+usemos la función plot() para graficar nuestro vector
+
+```{r}
+plot(edades)
+```
+
+## Levantar datos
+
+Vamos a explorar una base sobre el Programa Nacional De Inclusion Socio-Productiva Y Desarrollo Local - Potenciar Trabajo, creado por RESOL-2020-121-APN-MDS. y cuyos datos se encuentran disponibles en
+
+Fuente: https://www.datos.gob.ar/dataset/desarrollo-social-potenciar-trabajo
+
+Desde R podemos leer muchos tipos de archivos: csv, xlsx, json,shp... para cada uno de ellos tendremos una función diferente
+
+Aquí vamos a usar la función `read.csv()` para leer un archivo csv
+
+Para leer el archivo directamente desde internet ponemos al URL del archivo entre comillas.
+
+```{r}
+
+df <- read.csv("https://datosabiertos.desarrollosocial.gob.ar/dataset/d45687c0-f2ba-41d9-9989-0ad9799308ae/resource/5d5274f0-f4d5-440a-9781-7fc6df0b4cb2/download/potenciar-trabajo-total-titulares-2022-10-01.csv")
+
+```
+
+para descargarlo a nuestro espacio de trabajo usamos la funcion write.csv()
+
+```{r}
+write.csv(df, "df.csv")
+```
+
+para leer el archivo desde nuestra compu:
+
+```{r}
+df <- read.csv("df.csv")
+```
+
+Ahora vamos a ver qué tiene el objeto df_airbnb:
+
+```{r}
+df
+```
+
+¿Con qué función vemos las primeros 5 observaciones?
+
+```{r}
+# completar la función aquí
+(df_airbnb)
+```
+
+Ahora vamos a usar la función `summary()` ¿Qué hace?
+
+```{r}
+summary(df)
+```
+
+Con el simbolo \$ puedo elegir las variables de mi tabla y a cada una de ellas puedo aplicarle una función
+
+```{r}
+mean(df$titulares) #utilizo el operador $ para seleccionar una variable  y aplicar una funcion
+
+max(df$titulares) #máximo de médicos para la categoría
+
+min(df$titulares) #mínimo de médicos para la categoría
+
+#usamos un paquete para generar una primera exploración gráfica del set de datos
+
+
+```
+
+Para saber más acerca de una función siempre podes consultar la ayuda de r
+
+```{r}
+?mean
+```
+
+## Graficar con la ayuda de esquisse
+
+`ggplot` es un paquete de visualización de datos, sin embargo al principio puede resultar un poco confuso.
+
+Fanny Meyer, Victor Perrier junto a otros colaboradores crearon una interfaz interactiva para ayudarnos a dar nuestros primeros pasos en ggplot: el paquete `esquisse` que en francés significa bosquejo.
+
+Vamos a instalar este paquete y vamos a usar la función `esquisser` para hacer un gráfico en el que veamos la cantidad de titulares por provincia.
+
+```{r}
+#instalaremos el paquete squisse
+
+install.packages("esquisse") #instalamos el paquete, por unica vez
+
+library(esquisse) #activamos el paquete en nuestro sistema
+
+esquisser(df) #corremos la funcion de visualizacion
+
+
+```
+
+## Importante
+
+- Hay muchas maneras de hacer estos procesos y obtener resultados similares,hoy vimos una forma operativa.
+
+- R puede conectarse varios tipos de archivos.
